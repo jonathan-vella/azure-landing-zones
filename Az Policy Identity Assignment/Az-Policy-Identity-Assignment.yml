@@ -1,0 +1,32 @@
+trigger: none
+
+parameters:
+- name: type
+  displayName: Target Scope
+  type: string
+  values: 
+  - Subscription
+  - ManagementGroup
+
+- name: id
+  displayName: Scope Id
+  type: string
+
+variables:
+- group: "Azure Environment"
+
+stages:
+- stage: AzurePolicyMSIScan
+  displayName: "Checking MSI Assignments"
+  jobs:  
+  - job: FixAssignments
+    displayName: "Updating MSI Assignments"
+    pool: 
+      vmImage: 'windows-latest'
+    steps:
+    - task: PowerShell@2
+      inputs:
+          filePath: 'Az Policy Identity Assignment\az-policy-fix-ident-assignment.ps1'
+          pwsh: true
+          arguments: '-type "${{ parameters.type }}" -id "${{ parameters.id }}" -TenantID $(TenantID) -AppID $(ClientID) -AppSecret $(ClientSecret)'
+      displayName: 'Run PowerShell Script'

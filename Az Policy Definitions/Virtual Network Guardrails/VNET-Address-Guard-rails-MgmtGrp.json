@@ -1,0 +1,173 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string",
+            "defaultValue": "West Europe",
+            "metadata": {
+                "description": "Location"
+            }
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "name": "PolicyDefinition-DenySubnetSize",
+            "type": "Microsoft.Resources/deployments",
+            "location": "[parameters('location')]",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/PieterbasNagengast/AzurePolicy-DenySubnetSize/main/SubnetPolicy-MgmtGrp.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {}
+            }
+        },
+        {
+            "name": "PolicyDefinition-DenyEqualSubnetAddressSpace",
+            "type": "Microsoft.Resources/deployments",
+            "location": "[parameters('location')]",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/PieterbasNagengast/AzurePolicy-DenyEqualSubnetSizeAndAddressSpace/main/SubnetNotEqualToAddressSpace-MgmtGrp.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {}
+            }
+        },
+        {
+            "name": "PolicyDefinition-MaxAddressSpaces",
+            "type": "Microsoft.Resources/deployments",
+            "location": "[parameters('location')]",
+            "apiVersion": "2021-04-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/PieterbasNagengast/AzurePolicy-VNETMaxAddressSpaces/main/VNETMaxAddressSpaces-MgmtGrp.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {}
+            }
+        },
+        {
+            "name": "VNET-Address-Guard-rails",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "apiVersion": "2021-06-01",
+            "dependson": [
+                "[resourceId('Microsoft.Resources/deployments', 'PolicyDefinition-DenySubnetSize')]",
+                "[resourceId('Microsoft.Resources/deployments', 'PolicyDefinition-DenyEqualSubnetAddressSpace')]",
+                "[resourceId('Microsoft.Resources/deployments', 'PolicyDefinition-MaxAddressSpaces')]"
+            ],
+            "properties": {
+                "description": "VNET Address Guard rails Policy initiative. Deny specific Subnet size, restrict amount of address spaces per VNET and deny VNETs with equal address space and subnet size.",
+                "displayName": "VNET Address Guard rails",
+                "metadata": {
+                    "category": "Network"
+                },
+                "parameters": {
+                    "DeniedSubnetSize": {
+                        "type": "string",
+                        "metadata": {
+                            "description": "The denied Subnet size (eg. /24) VNETs",
+                            "displayName": "Deny Subnet size"
+                        },
+                        "defaultvalue": "/24"
+                    },
+                    "DeniedSubnetSizeEffect": {
+                        "type": "String",
+                        "metadata": {
+                            "displayName": "Effect for Denied Subnet size",
+                            "description": "Enable or disable the execution of the policy."
+                        },
+                        "allowedValues": [
+                            "audit",
+                            "deny",
+                            "disabled"
+                        ],
+                        "defaultValue": "deny"
+                    },
+                    "MaxAddressSpaces": {
+                        "type": "integer",
+                        "metadata": {
+                            "description": "Max allowed VNET Address Spaces on VNET",
+                            "displayName": "Max Allowed VNET Address Spaces"
+                        },
+                        "defaultvalue": 1
+                    },
+                    "MaxAddressSpacesEffect": {
+                        "type": "String",
+                        "metadata": {
+                            "displayName": "Effect for Max VNET Address Spaces allowed on VNET",
+                            "description": "Enable or disable the execution of the policy."
+                        },
+                        "allowedValues": [
+                            "audit",
+                            "deny",
+                            "disabled"
+                        ],
+                        "defaultValue": "deny"
+                    },
+                    "DenyEqualAddressSpaceSubnetEffect": {
+                        "type": "String",
+                        "metadata": {
+                            "displayName": "Effect for Deny Address Space and Subnet to be equal",
+                            "description": "Enable or disable the execution of the policy."
+                        },
+                        "allowedValues": [
+                            "audit",
+                            "deny",
+                            "disabled"
+                        ],
+                        "defaultValue": "deny"
+                    }
+                },
+                "policyDefinitionGroups": [],
+                "policyDefinitions": [
+                    {
+                        "parameters": {
+                            "DeniedSubnetSize": {
+                                "value": "[[parameters('DeniedSubnetSize')]"
+                            },
+                            "effect": {
+                                "value": "[[parameters('DeniedSubnetSizeEffect')]"
+                            }
+                        },
+                        "policyDefinitionId": "[concat(managementGroup().id,'/providers/',reference('PolicyDefinition-DenySubnetSize').outputs.policyID.value)]"
+
+                    },
+                    {
+                        "parameters": {
+                            "effect": {
+                                "value": "[[parameters('DenyEqualAddressSpaceSubnetEffect')]"
+                            }
+                        },
+                        "policyDefinitionId": "[concat(managementGroup().id,'/providers/',reference('PolicyDefinition-DenyEqualSubnetAddressSpace').outputs.policyID.value)]"
+                    },
+                    {
+                        "parameters": {
+                            "MaxAddressSpaces": {
+                                "value": "[[parameters('MaxAddressSpaces')]"
+                            },
+                            "effect": {
+                                "value": "[[parameters('MaxAddressSpacesEffect')]"
+                            }
+                        },
+                        "policyDefinitionId": "[concat(managementGroup().id,'/providers/',reference('PolicyDefinition-MaxAddressSpaces').outputs.policyID.value)]"
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {
+        "policySetID": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Authorization/policySetDefinitions','VNET-Address-Guard-rails')]"
+        }
+    }    
+}

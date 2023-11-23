@@ -1,0 +1,89 @@
+{
+    "mode": "All",
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Sql/servers/databases"
+          },
+          {
+            "field": "name",
+            "notEquals": "master"
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]",
+        "details": {
+          "type": "Microsoft.Sql/servers/databases/backupShortTermRetentionPolicies",
+          "name": "default",
+          "roleDefinitionIds": [
+            "/providers/Microsoft.Authorization/roleDefinitions/9b7fa17d-e63e-47b0-bb0a-15c516ac86ec"
+          ],
+          "existenceCondition": {
+            "field": "Microsoft.Sql/servers/databases/backupShortTermRetentionPolicies/retentionDays",
+            "equals": "[parameters('retentionDays')]"
+          },
+          "deployment": {
+            "properties": {
+              "mode": "incremental",
+              "template": {
+                "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                "contentVersion": "1.0.0.0",
+                "parameters": {
+                  "serverName": {
+                    "type": "string"
+                  },
+                  "shortTermRetention": {
+                    "type": "string"
+                  }
+                },
+                "resources": [
+                  {
+                    "name": "[concat(parameters('serverName'),'/default')]",
+                    "type": "Microsoft.Sql/servers/databases/backupShortTermRetentionPolicies",
+                    "apiVersion": "2017-10-01-preview",
+                    "properties": {
+                      "retentionDays": "[parameters('shortTermRetention')]"
+                    }
+                  }
+                ]
+              },
+              "parameters": {
+                "serverName": {
+                  "value": "[field('fullname')]"
+                },
+                "shortTermRetention": {
+                  "value": "[parameters('retentionDays')]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy."
+        },
+        "allowedValues": [
+          "DeployIfNotExists",
+          "AuditIfNotExists",
+          "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists"
+      },
+      "retentionDays": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Retention Days",
+          "description": "Set the number of Backup Retention Days."
+        },
+        "defaultValue": "7"
+      }
+    }
+  }

@@ -1,0 +1,2 @@
+# Remediate non-compliant resources with Azure Policy
+Resources that are non-compliant to policies with deployIfNotExists or modify effects can be put into a compliant state through Remediation. Remediation is accomplished through remediation tasks that deploy the deployIfNotExists template or the modify operations of the assigned policy on your existing resources and subscriptions, whether that assignment is on a management group, subscription, resource group, or individual resource. 

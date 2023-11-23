@@ -1,0 +1,80 @@
+trigger: none
+
+parameters:
+- name: type
+  displayName: Scope of Compliance & Remediation Scan
+  type: string
+  values: 
+  - Subscription
+  - ManagementGroup
+  - ResourceGroup
+
+- name: id
+  displayName: Scope Id
+  type: string
+
+variables:
+- group: "Azure Environment"
+
+stages:
+- stage: PolicyCompliance
+  displayName: "Azure Policy Compliance Scan"
+  jobs:  
+  - job: GetPolicyCompliance
+    displayName: "Checking Azure Policy compliance status"
+    pool: 
+      vmImage: 'windows-latest'
+    steps:
+    - task: PowerShell@2
+      inputs:
+          filePath: 'Az Policy Remediation\AZ-PolicyCompliance\get-policycompliance.ps1'
+          pwsh: true
+          arguments: '-type "${{ parameters.type }}" -id "${{ parameters.id }}" -TenantID $(TenantID) -AppID $(ClientID) -AppSecret $(ClientSecret)'
+      displayName: 'Run PowerShell Script'
+
+- stage: Validation
+  displayName: "Manual Validation of Changes"
+  jobs:  
+  - job: waitForValidation
+    displayName: Waiting for external validation  
+    pool: server
+    timeoutInMinutes: 1
+    steps:
+    - task: ManualValidation@0
+      timeoutInMinutes: 1
+      inputs:
+        notifyUsers: |
+          
+        instructions: 'Please validate the build configuration and resume'
+        onTimeout: 'resume'
+
+- stage: RemediateDINEPolicy
+  displayName: "Remediation Stage - DINE effect"
+  jobs:  
+  - job: RemediatePolicy
+    displayName: "Remediation of Non-Compliant Policies with DINE effect"
+    pool: 
+      vmImage: 'windows-latest'
+    steps:
+    - task: PowerShell@2
+      inputs:
+          filePath: 'Az Policy Remediation\AZ-PolicyCompliance\remediate-dine-policy.ps1'
+          pwsh: true
+          arguments: '-type "${{ parameters.type }}" -id "${{ parameters.id }}" -TenantID $(TenantID) -AppID $(ClientID) -AppSecret $(ClientSecret) -ErrorAction SilentlyContinue'
+      displayName: 'Run PowerShell Script'
+
+- stage: RemediateModifyPolicy
+  displayName: "Remediation Stage - Modify Effect"
+  condition: succeededOrFailed()
+  jobs:  
+  - job: RemediatePolicy
+    displayName: "Remediation of Non-Compliant Policies with Modify effect"
+    pool: 
+      vmImage: 'windows-latest'
+    steps:
+    - task: PowerShell@2
+      inputs:
+          filePath: 'Az Policy Remediation\AZ-PolicyCompliance\remediate-modify-policy.ps1'
+          pwsh: true
+          arguments: '-type "${{ parameters.type }}" -id "${{ parameters.id }}" -TenantID $(TenantID) -AppID $(ClientID) -AppSecret $(ClientSecret)'
+      displayName: 'Run PowerShell Script'

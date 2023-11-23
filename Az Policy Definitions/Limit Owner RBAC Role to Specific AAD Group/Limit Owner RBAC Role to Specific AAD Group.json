@@ -1,0 +1,79 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "variables": {
+      "policyName": "limit-owner-role-assignment",
+      "policyDisplayName": "Limit Owner RBAC role to a specific AAD Group",
+      "policyDescription": "This policy is used to ensure Owner role is only assigned to the AzSubOwner AAD group",
+      "metadata": "IAM"
+  },
+  "resources": [
+      {
+          "type": "Microsoft.Authorization/policyDefinitions",
+          "apiVersion": "2019-09-01",
+          "name": "[variables('policyName')]",
+          "properties": {
+              "displayName": "[variables('policyDisplayName')]",
+              "policyType": "Custom",
+              "description": "[variables('policyDescription')]",
+              "metadata": "[variables('metadata')]",
+              "mode": "All",
+              "parameters": {
+                  "ownerRoleDefId": {
+                      "type": "string",
+                      "defaultValue": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+                      "metadata": {
+                          "description": "Role Definition ID of built-in Owner Role",
+                          "displayName": "Role Definition ID of built-in Owner Role"
+                      }
+                  },
+                  "AzSubOwnerGroupId": {
+                      "type": "string",
+                      "defaultValue": "98beb338-ba36-4952-9d78-48005ce6e7c6",
+                      "metadata": {
+                          "description": "ID of AzSubOwner group in AAD",
+                          "displayName": "ID of AzSubOwner group in AAD"
+                      }
+                  },
+                  "effect": {
+                      "type": "string",
+                      "metadata": {
+                          "displayName": "Effect",
+                          "description": "Effect of this Azure Policy - Audit, Deny or Disabled"
+                      },
+                      "allowedValues": [
+                          "Audit",
+                          "Deny",
+                          "Disabled"
+                      ]
+                  }
+              },
+              "policyRule": {
+                  "if": {
+                      "anyOf": [
+                          {
+                              "allOf": [
+                                  {
+                                      "field": "type",
+                                      "equals": "Microsoft.Authorization/roleAssignments"
+                                  },
+                                  {
+                                      "field": "Microsoft.Authorization/roleAssignments/roleDefinitionId",
+                                      "contains": "[[parameters('ownerRoleDefId')]"
+                                  },
+                                  {
+                                      "field": "Microsoft.Authorization/roleAssignments/principalId",
+                                      "notEquals": "[[parameters('AzSubOwnerGroupId')]"
+                                  }
+                              ]
+                          }
+                      ]
+                  },
+                  "then": {
+                      "effect": "[[parameters('effect')]"
+                  }
+              }
+          }
+      }
+  ]
+}

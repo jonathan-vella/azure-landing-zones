@@ -220,7 +220,8 @@ ForEach ($subscription in $intermediateRootGroupChildSubscriptions) {
     Set-AzContext -Subscription $subscription.subID | Out-Null
 
     # Get all Resource Groups in Subscription
-    $resources = Get-AzResourceGroup
+    $filter = '*alz'
+    $resources = Get-AzResourceGroup | ? ResourceGroupName -match $filter
 
     $resources | ForEach-Object -Parallel {
         Write-Host "Deleting " $_.ResourceGroupName "..." -ForegroundColor Red

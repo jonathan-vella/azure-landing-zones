@@ -16,7 +16,7 @@ DINE Azure Policies only apply once automatically and tries to enforce that stat
 
 -Did somebody remove a required Resource Type extension accidentally? APA will try to resolve it in the next (12) hours. 
 
-AzurePolicyAutomator enables eventually consistent Azure Policy goverance for All Policy assignments in the Azure tenant. 
+AzurePolicyAutomator enables eventually consistent Azure Policy governance for All Policy assignments in the Azure tenant. 
 
 ## Overview
 
@@ -29,7 +29,7 @@ This project deploys the following Azure resource types:
 
 1. Hit the blue "Deploy" button below.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com/jonathan-vella/azure-landing-zones/main/Az%20Policy%20Remediation%20via%20Az%20Automation/main.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjonathan-vella%2Fazure-landing-zones%2Fmain%2FAz%2520Policy%2520Remediation%2520via%2520Az%2520Automation%2Fmain.json)
 
 2. Specify the Azure Subscription.
 

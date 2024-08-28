@@ -1,0 +1,47 @@
+{
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "audit-deny-eh-network-ruleset-public-network-access-policyDef",
+  "properties": {
+    "displayName": "Azure Event Hub Namespace Network Rule Set should disable public network access",
+    "description": "Disable public network access for your Event Hub namespace network rule set so that it's not accessible over the public internet.",
+    "metadata": {
+      "category": "Event Hub",
+      "version": "1.0.0",
+      "preview": false,
+      "depreciated": false
+    },
+    "mode": "All",
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "'Audit' allows a non-compliant resource to be created, but flags it as non-compliant. 'Deny' blocks the resource creation. 'Disable' turns off the policy."
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.EventHub/namespaces/networkrulesets"
+          },
+          {
+            "field": "Microsoft.EventHub/namespaces/networkRuleSets/publicNetworkAccess",
+            "Equals": "Enabled"
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+  }
+}

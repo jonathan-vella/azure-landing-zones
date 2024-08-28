@@ -29,7 +29,7 @@ This project deploys the following Azure resource types:
 
 1. Hit the blue "Deploy" button below.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmsdirtbag%2FAzurePolicyAutomator%2Fmain%2Fmain.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com/jonathan-vella/azure-landing-zones/main/Az%20Policy%20Remediation%20via%20Az%20Automation/main.json)
 
 2. Specify the Azure Subscription.
 

@@ -211,7 +211,7 @@
                 "logProgress": false,
                 "runbookType": "PowerShell72",
                 "publishContentLink": {
-                  "uri": "https://raw.githubusercontent.com/msdirtbag/AzurePolicyAutomator/main/AzurePolicyAutomator.ps1"
+                  "uri": "https://raw.githubusercontent.com/jonathan-vella/azure-landing-zones/main/Az%20Policy%20Remediation%20via%20Az%20Automation/src/main/AzurePolicyAutomator.ps1"
                 }
               },
               "dependsOn": [

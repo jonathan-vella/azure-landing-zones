@@ -29,18 +29,18 @@ This project deploys the following Azure resource types:
 
 1. Hit the blue "Deploy" button below.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjonathan-vella%2Fazure-landing-zones%2Fmain%2FAz%2520Policy%2520Remediation%2520via%2520Az%2520Automation%2Fmain.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjonathan-vella%2Fazure-landing-zones%2Fmain%2FAz%2520Policy%2520Remediation%2520via%2520Az%2520Automation%2Fsrc%2Fmain.json)
 
 2. Specify the Azure Subscription.
 
-   <img src="./sub.png" alt="Sub">
+   <img src="./images/sub.png" alt="Sub">
 
 3. Review the deployed components and wait for the 1st Job to start in the next 60 minutes. 
 
-   <img src="./deployed.png" alt="Deployed">
+   <img src="./images/deployed.png" alt="Deployed">
 
-   <img src="./rg.png" alt="RG">
+   <img src="./images/rg.png" alt="RG">
 
-   <img src="./jobs.png" alt="Jobs">
+   <img src="./images/jobs.png" alt="Jobs">
 
-   <img src="./tasks.png" alt="Tasks">
+   <img src="./images/tasks.png" alt="Tasks">

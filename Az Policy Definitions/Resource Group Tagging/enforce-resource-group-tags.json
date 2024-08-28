@@ -1,0 +1,41 @@
+{
+  "mode": "All",
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+        },
+        {
+          "anyOf": [
+            {
+              "field": "tags['environment']",
+              "exists": "false"
+            },
+            {
+              "field": "tags['costcenter']",
+              "exists": "false"
+            },
+            {
+              "field": "tags['owner']",
+              "exists": "false"
+            },
+            {
+              "field": "tags['workload']",
+              "exists": "false"
+            },
+            {
+              "field": "tags['sla']",
+              "exists": "false"
+            }
+          ]
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
+  },
+  "parameters": {}
+}

@@ -1,0 +1,76 @@
+{
+	"mode": "All",
+	"policyRule": {
+	  "if": {
+		"allOf": [
+		  {
+			"field": "type",
+			"equals": "Microsoft.Resources/subscriptions/resourceGroups"
+		  },
+		  {
+			"field": "name",
+			"notLike": "AzureBackupRG*"
+		  },
+		  {
+			"field": "name",
+			"notLike": "ResourceMover*"
+		  },
+		  {
+			"field": "name",
+			"notLike": "databricks-rg*"
+		  },
+		  {
+			"field": "name",
+			"notLike": "NetworkWatcherRG"
+		  },
+		  {
+			"field": "name",
+			"notLike": "microsoft-network"
+		  },
+		  {
+			"field": "name",
+			"notLike": "LogAnalyticsDefaultResources"
+		  },
+		  {
+			"field": "name",
+			"notLike": "rg-amba-*"
+		  },
+		  {
+			"field": "name",
+			"notLike": "DynamicsDeployments*"
+		  },
+		  {
+			"field": "name",
+			"notLike": "MC_myResourceGroup*"
+		  },
+		  {
+			"anyOf": [
+				{
+				  "field": "tags['environment']",
+				  "exists": "false"
+				},
+				{
+				  "field": "tags['costcenter']",
+				  "exists": "false"
+				},
+				{
+				  "field": "tags['owner']",
+				  "exists": "false"
+				},
+				{
+				  "field": "tags['workload']",
+				  "exists": "false"
+				},
+				{
+				  "field": "tags['sla']",
+				  "exists": "false"
+				}
+			  ]
+			}
+		]
+	  },
+	  "then": {
+		"effect": "deny"
+	  }
+	}
+  }

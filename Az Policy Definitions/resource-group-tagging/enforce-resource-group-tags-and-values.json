@@ -1,0 +1,93 @@
+{
+    "mode": "All",
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+          },
+          {
+            "field": "name",
+            "notLike": "AzureBackupRG*"
+          },
+          {
+            "field": "name",
+            "notLike": "ResourceMover*"
+          },
+          {
+            "field": "name",
+            "notLike": "databricks-rg*"
+          },
+          {
+            "field": "name",
+            "notLike": "NetworkWatcherRG"
+          },
+          {
+            "field": "name",
+            "notLike": "microsoft-network"
+          },
+          {
+            "field": "name",
+            "notLike": "LogAnalyticsDefaultResources"
+          },
+          {
+            "field": "name",
+            "notLike": "rg-amba-*"
+          },
+          {
+            "field": "name",
+            "notLike": "DynamicsDeployments*"
+          },
+          {
+            "field": "name",
+            "notLike": "MC_myResourceGroup*"
+          },
+          {
+            "not": {
+              "allOf": [
+                {
+                  "field": "[concat('tags[',parameters('environment'), ']')]",
+                  "exists": "true"
+                },
+                {
+                  "field": "[concat('tags[',parameters('application'), ']')]",
+                  "exists": "true"
+                },
+                {
+                  "field": "[concat('tags[',parameters('owner'), ']')]",
+                  "exists": "true"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "then": {
+        "effect": "deny"
+      }
+    },
+    "parameters": {
+      "environment": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Environment",
+          "description": "Deployment environment of this workload or service. Example: Prod, Dev, Test"
+        }
+      },
+      "owner": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Owner",
+          "description": "Team managing the resource."
+        }
+      },
+      "application": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Application",
+          "description": "Application Name, i.e 'Contoso Web App'"
+        }
+      }
+    }
+  }

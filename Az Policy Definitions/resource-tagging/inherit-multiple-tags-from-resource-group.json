@@ -1,0 +1,165 @@
+{
+  "mode": "Indexed",
+  "policyRule": {
+    "if": {
+      "anyOf": [
+        {
+          "field": "[concat('tags[', parameters('tagName1'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('tagName2'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('tagName3'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('tagName4'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('tagName5'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('tagName6'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('tagName7'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('tagName8'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('tagName9'), ']')]",
+          "exists": "false"
+        }
+      ]
+    },
+    "then": {
+      "effect": "modify",
+      "details": {
+        "roleDefinitionIds": [
+          "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+        ],
+        "operations": [
+          {
+            "operation": "addOrReplace",
+            "field": "[concat('tags[', parameters('tagName1'), ']')]",
+            "value": "[resourceGroup().tags[parameters('tagName1')]]"
+          },
+          {
+            "operation": "addOrReplace",
+            "field": "[concat('tags[', parameters('tagName2'), ']')]",
+            "value": "[resourceGroup().tags[parameters('tagName2')]]"
+          },
+          {
+            "operation": "addOrReplace",
+            "field": "[concat('tags[', parameters('tagName3'), ']')]",
+            "value": "[resourceGroup().tags[parameters('tagName3')]]"
+          },
+          {
+            "operation": "addOrReplace",
+            "field": "[concat('tags[', parameters('tagName4'), ']')]",
+            "value": "[resourceGroup().tags[parameters('tagName4')]]"
+          },
+          {
+            "operation": "addOrReplace",
+            "field": "[concat('tags[', parameters('tagName5'), ']')]",
+            "value": "[resourceGroup().tags[parameters('tagName5')]]"
+          },
+          {
+            "operation": "addOrReplace",
+            "field": "[concat('tags[', parameters('tagName6'), ']')]",
+            "value": "[resourceGroup().tags[parameters('tagName6')]]"
+          },
+          {
+            "operation": "addOrReplace",
+            "field": "[concat('tags[', parameters('tagName7'), ']')]",
+            "value": "[resourceGroup().tags[parameters('tagName7')]]"
+          },
+          {
+            "operation": "addOrReplace",
+            "field": "[concat('tags[', parameters('tagName8'), ']')]",
+            "value": "[resourceGroup().tags[parameters('tagName8')]]"
+          },
+          {
+            "operation": "addOrReplace",
+            "field": "[concat('tags[', parameters('tagName9'), ']')]",
+            "value": "[resourceGroup().tags[parameters('tagName9')]]"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "tagName1": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Environment Tag",
+        "description": "Name of the tag, such as 'environment'"
+      }
+    },
+    "tagName2": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Owner Tag",
+        "description": "Name of the tag, such as 'owner'"
+      }
+    },
+    "tagName3": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Cost Center Tag",
+        "description": "Name of the tag, such as 'costcenter'"
+      }
+    },
+    "tagName4": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Application Name Tag",
+        "description": "Name of the tag, such as 'application'"
+      }
+    },
+    "tagName5": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Workload Name Tag",
+        "description": "Name of the tag, such as 'workload'"
+      }
+    },
+    "tagName6": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Service Level Agreement Tag",
+        "description": "Name of the tag, such as 'sla'"
+      }
+    },
+    "tagName7": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Backup Policy Tag",
+        "description": "Name of the tag, such as 'backup-policy'"
+      }
+    },
+    "tagName8": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Maintenance Window Tag",
+        "description": "Name of the tag, such as 'maint-window'"
+      }
+    },
+    "tagName9": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Technical Contact Tag",
+        "description": "Name of the tag, such as 'technical-contact'"
+      }
+    }
+  }
+}

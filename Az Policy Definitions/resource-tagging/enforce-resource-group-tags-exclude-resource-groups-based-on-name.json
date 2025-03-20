@@ -50,11 +50,15 @@
 				  "exists": "false"
 				},
 				{
+				  "field": "tags['owner']",
+				  "exists": "false"
+				},
+				{
 				  "field": "tags['costcenter']",
 				  "exists": "false"
 				},
 				{
-				  "field": "tags['owner']",
+				  "field": "tags['application']",
 				  "exists": "false"
 				},
 				{
@@ -62,8 +66,20 @@
 				  "exists": "false"
 				},
 				{
-				  "field": "tags['sla']",
-				  "exists": "false"
+					"field": "tags['sla']",
+					"exists": "false"
+				},
+				{
+					"field": "tags['backup-policy']",
+					"exists": "false"
+				},
+				{
+					"field": "tags['maint-window']",
+					"exists": "false"
+				},
+				{
+					"field": "tags['technical-contact']",
+					"exists": "false"
 				}
 			  ]
 			}

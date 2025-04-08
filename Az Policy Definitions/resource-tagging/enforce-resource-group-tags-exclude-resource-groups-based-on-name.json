@@ -80,7 +80,11 @@
 				{
 					"field": "tags['technical-contact']",
 					"exists": "false"
-				}
+				},
+				{
+                                "field": "tags['environment']",
+                                "notIn": ["alz","prod", "test", "dev"]
+                            }
 			  ]
 			}
 		]

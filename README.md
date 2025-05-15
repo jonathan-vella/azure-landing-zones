@@ -1,5 +1,12 @@
 # Azure Landing Zones
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+[![Maintained](https://img.shields.io/badge/Maintained-yes-green.svg)](https://github.com/your-org/azure-landing-zones)
+[![Azure](https://img.shields.io/badge/Azure-%230078D4.svg?logo=microsoftazure&logoColor=white)](https://azure.microsoft.com)
+[![PowerShell](https://img.shields.io/badge/PowerShell-%235391FE.svg?logo=powershell&logoColor=white)](https://docs.microsoft.com/en-us/powershell/)
+[![Bicep](https://img.shields.io/badge/Bicep-0078D7.svg?logo=microsoft&logoColor=white)](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/)
+
 This repository provides a comprehensive set of resources, templates, and scripts to help you implement Azure Landing Zones for enterprise-scale governance, security, and compliance. It includes:
 
 - **Azure Policy Definitions**: Custom and built-in policy definitions for enforcing standards across your Azure environment.

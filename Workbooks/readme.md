@@ -1,3 +1,19 @@
+# Azure Workbook & Dashboard Collection
+
+This folder contains a curated collection of Azure Workbook templates, dashboard links, and monitoring solutions that can be used to gain insights into various Azure services and resources in your environment.
+
+## Introduction
+
+Azure Workbooks are interactive documents that provide insights into your data through visual reports. This collection includes workbooks for monitoring resources, tracking costs, ensuring security, and managing compliance across your Azure environment.
+
+## How to Use This Collection
+
+1. Browse the list of workbooks and dashboards below, organized by Azure service category
+2. Click on the links to access the source material, documentation, or templates
+3. Follow the instructions in each link to import or configure the workbook in your Azure environment
+
+## Available Workbooks & Dashboards
+
 **AZURE WORKBOOK & DASHBOARD TOOLKIT for you:**
 
 ### Azure Arc
@@ -58,3 +74,13 @@
 
 ### Continuous Cloud Optimization
 - [Continuous Cloud Optimization Insights](https://github.com/Azure/CCOInsights)
+
+## Contributing
+
+To contribute to this collection:
+1. Add a link to the relevant section above
+2. Include a brief description of the workbook or dashboard
+3. Submit a pull request with your changes
+
+## Last Updated
+May 15, 2025

@@ -44,49 +44,67 @@
 			"notLike": "MC_myResourceGroup*"
 		  },
 		  {
-			"anyOf": [
-				{
-				  "field": "tags['environment']",
-				  "exists": "false"
-				},
-				{
-				  "field": "tags['owner']",
-				  "exists": "false"
-				},
-				{
-				  "field": "tags['costcenter']",
-				  "exists": "false"
-				},
-				{
-				  "field": "tags['application']",
-				  "exists": "false"
-				},
-				{
-				  "field": "tags['workload']",
-				  "exists": "false"
-				},
-				{
-					"field": "tags['sla']",
-					"exists": "false"
-				},
-				{
-					"field": "tags['backup-policy']",
-					"exists": "false"
-				},
-				{
-					"field": "tags['maint-window']",
-					"exists": "false"
-				},
-				{
-					"field": "tags['technical-contact']",
-					"exists": "false"
-				}
-			  ]
-			}
-		]
-	  },
-	  "then": {
-		"effect": "deny"
+            "anyOf": [
+              {
+                "field": "tags['environment']",
+                "exists": "false"
+              },
+              {
+                "field": "tags['owner']",
+                "exists": "false"
+              },
+              {
+                "field": "tags['costcenter']",
+                "exists": "false"
+              },
+              {
+                "field": "tags['application']",
+                "exists": "false"
+              },
+              {
+                "field": "tags['workload']",
+                "exists": "false"
+              },
+              {
+                "field": "tags['sla']",
+                "exists": "false"
+              },
+              {
+                "field": "tags['backup-policy']",
+                "exists": "false"
+              },
+              {
+                "field": "tags['maint-window']",
+                "exists": "false"
+              },
+              {
+                "field": "tags['technical-contact']",
+                "exists": "false"
+              },
+              {
+                "field": "tags['environment']",
+                "notIn": [
+                  "alz",
+                  "prod",
+                  "test",
+                  "dev"
+                ]
+              },
+              {
+                "field": "tags['sla']",
+                "notIn": [
+                  "critical",
+                  "high",
+                  "medium",
+                  "low"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "then": {
+        "effect": "deny"
 	  }
 	}
   }
